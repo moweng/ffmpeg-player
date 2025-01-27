@@ -69,16 +69,16 @@ int main(int argc, char *argv[])
     }
 
     //初始化视频解码线程
-    AVFrameQueue video_frame_queue;
-    DecodeThread* video_decode_thread = new DecodeThread(&video_packet_queue, &video_frame_queue);
-    AVCodecParameters* videoCodecs = demux_thread->VideoCodecParameters();
+    //AVFrameQueue video_frame_queue;
+    //DecodeThread* video_decode_thread = new DecodeThread(&video_packet_queue, &video_frame_queue);
+    //AVCodecParameters* videoCodecs = demux_thread->VideoCodecParameters();
 
-    ret = video_decode_thread->Init(videoCodecs);
-    if (ret < 0) {
+    //ret = video_decode_thread->Init(videoCodecs);
+  /*  if (ret < 0) {
         printf("video_decode_thread.Init failed \n");
         return -1;
     }
-    ret = video_decode_thread->Start();
+    ret = video_decode_thread->Start();*/
 
     if (ret < 0) {
         printf("video_decode_thread.Start failed \n");
@@ -88,13 +88,13 @@ int main(int argc, char *argv[])
     // 初始化 audio 输出
     AudioParams audio_params = { 0 };
     memset(&audio_params, 0, sizeof(AudioParams));
-    audio_params.channels = demux_thread->AudioCodecParameters()->ch_layout.nb_channels;
+    audio_params.channels = audioCodecs->ch_layout.nb_channels;
     // 将 int channel_layout 数值转化为AVChannelLayout
-    audio_params.channel_layout = &demux_thread->AudioCodecParameters()->ch_layout;
+    audio_params.channel_layout = audioCodecs->ch_layout;
 
-    audio_params.fmt = (enum AVSampleFormat)demux_thread->AudioCodecParameters()->format;
-    audio_params.freq = demux_thread->AudioCodecParameters()->sample_rate;
-    audio_params.frame_size = demux_thread->AudioCodecParameters()->frame_size;
+    audio_params.fmt = (enum AVSampleFormat)audioCodecs->format;
+    audio_params.freq = audioCodecs->sample_rate;
+    audio_params.frame_size = audioCodecs->frame_size;
     AudioOutput* audio_output = new AudioOutput(audio_params, &audio_frame_queue);
     ret = audio_output->Init();
 
@@ -107,10 +107,10 @@ int main(int argc, char *argv[])
     std::this_thread::sleep_for(std::chrono::milliseconds(125000));
     demux_thread->Stop();
     audio_decode_thread->Stop();
-    video_decode_thread->Stop();
+    //video_decode_thread->Stop();
     delete demux_thread;
     delete audio_decode_thread;
-    delete video_decode_thread;
+    //delete video_decode_thread;
     
     //return a.exec();
 }

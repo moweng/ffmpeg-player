@@ -9,7 +9,7 @@ extern "C" {
 typedef struct AudioParams {
 	int freq; // 采样率
 	int channels;
-	AVChannelLayout *channel_layout; // 通道布局
+	AVChannelLayout channel_layout; // 通道布局
 	enum  AVSampleFormat fmt;
 	int frame_size;
 

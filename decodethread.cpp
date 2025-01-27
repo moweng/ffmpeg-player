@@ -21,7 +21,7 @@ void print_decoder_context_info(AVCodecContext* dec_ctx) {
 	printf("Sample Format: %s\n", av_get_sample_fmt_name(dec_ctx->sample_fmt));
 
 	 //通道布局
-	printf("Channel Layout: 0x%" PRIx64 "\n", dec_ctx->ch_layout.nb_channels);
+	//printf("Channel Layout: 0x%" PRIx64 "\n", dec_ctx->ch_layout.nb_channels);
 	//	dec_ctx->channel_layout,
 	//	av_get_channel_layout_string((char[128]) { 0 }, 128, dec_ctx->channels, dec_ctx->channel_layout));
 }

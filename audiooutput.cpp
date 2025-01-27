@@ -29,13 +29,13 @@ void fill_audio_pcm(void* data, Uint8* stream, int len) {
 					(
 						(frame->format != is->dst_tgt_.fmt) 
 						|| (frame->sample_rate != is->dst_tgt_.freq)
-						|| av_channel_layout_compare(&frame->ch_layout, is->dst_tgt_.channel_layout)
+						|| av_channel_layout_compare(&frame->ch_layout, &is->dst_tgt_.channel_layout)
 						
 					) // channel_layout 可判断，ffmpeg 的版本暂时没有找到 channel_layout
 					&& (!is->swr_ctx_) // 采样器没有初始) 
 				){
 					// 创建采样器
-					int ret = swr_alloc_set_opts2(&is->swr_ctx_, is->dst_tgt_.channel_layout, (enum AVSampleFormat)is->dst_tgt_.fmt,
+					int ret = swr_alloc_set_opts2(&is->swr_ctx_,&is->dst_tgt_.channel_layout, (enum AVSampleFormat)is->dst_tgt_.fmt,
 						is->dst_tgt_.freq, &frame->ch_layout, (enum AVSampleFormat)frame->format,frame->sample_rate,
 						0, NULL);
 					if (!is->swr_ctx_ || swr_init(is->swr_ctx_) < 0){
@@ -122,8 +122,9 @@ int AudioOutput::Init()
 	dst_tgt_.fmt = AV_SAMPLE_FMT_S16;
 	dst_tgt_.freq = spec.freq;
 	//dst_tgt_.channel_layout = av_channel_layout_default(src_tgt_.channels);
-	av_channel_layout_default(dst_tgt_.channel_layout, src_tgt_.channels);
 	dst_tgt_.frame_size = src_tgt_.frame_size;
+	/*av_channel_layout_default(dst_tgt_.channel_layout, src_tgt_.channels);*/
+	av_channel_layout_default(&dst_tgt_.channel_layout, src_tgt_.channel_layout.nb_channels);
 	SDL_PauseAudio(0);
 	printf("fte AudioOutput::Init leave");
 	return 0;
