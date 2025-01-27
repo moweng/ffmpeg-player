@@ -58,20 +58,24 @@ void DemuxThread::Run()
 	int ret = 0;
 	AVPacket pkt;
 	while (abort_ != 1) {
+		if (audio_queue_->Size() > 50 || video_queue_->Size() > 50) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			continue;
+		}
 		ret = av_read_frame(ifmt_ctx_, &pkt);
 		if (ret < 0) {
-			log_->logFailedRetToString(ret, "av_read_frame");
+			log_->logFailedRetToString(ret, "av_read_pkt_frame");
 			break;
 		}
-		if (pkt.stream_index = audio_index_) {
+		if (pkt.stream_index == audio_index_) {
 			audio_queue_->Push(&pkt);
-			printf("fte audio_queue_ size %d \n", audio_queue_->Size());
+			printf("fte audio_pkt_queue_ size %d \n", audio_queue_->Size());
 
 		}
-		else if (pkt.stream_index = video_index_) {
+	/*	else if (pkt.stream_index == video_index_) {
 			video_queue_->Push(&pkt);
-			printf("fte video_queue_ size %d \n", video_queue_->Size());
-		}
+			printf("fte video_pkt_queue_ size %d \n", video_queue_->Size());
+		}*/
 		av_packet_unref(&pkt);
 	}
 	printf("fte Run finish \n");

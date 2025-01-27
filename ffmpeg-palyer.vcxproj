@@ -60,6 +60,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <IncludePath>D:\project\web\QT\Demo\SDL2-devel-2.30.11-VC\SDL2-2.30.11\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
@@ -70,8 +71,8 @@
     <Link>
       <LinkStatus>
       </LinkStatus>
-      <AdditionalDependencies>avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swscale.lib;swresample.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\project\tools\ffmpeg-5.1\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2test.lib;avcodec.lib;avdevice.lib;avfilter.lib;avformat.lib;avutil.lib;postproc.lib;swscale.lib;swresample.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\project\web\QT\Demo\SDL2-devel-2.30.11-VC\SDL2-2.30.11\lib\x64;D:\project\tools\ffmpeg-5.1\lib;</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy D:\project\tools\ffmpeg-5.1\bin\*.dll "$(OutDir)"</Command>
@@ -106,6 +107,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="audiooutput.cpp" />
     <ClCompile Include="avframequeue.cpp" />
     <ClCompile Include="avpacketqueue.cpp" />
     <ClCompile Include="decodethread.cpp" />
@@ -119,6 +121,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="audiooutput.h" />
     <ClInclude Include="avframequeue.h" />
     <ClInclude Include="avpacketqueue.h" />
     <ClInclude Include="decodethread.h" />

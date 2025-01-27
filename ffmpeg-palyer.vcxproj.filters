@@ -58,6 +58,9 @@
     <ClCompile Include="decodethread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="audiooutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="thread.h">
@@ -76,6 +79,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="decodethread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audiooutput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,7 +16,7 @@ public:
 		
 		av_strerror(ret, err2str, sizeof(err2str));
 		if (ret != 0) {
-			printf("fte %s failed, ret: %s \n", flag.c_str(), err2str);
+			printf("fte %s failed, ret: %s %d \n", flag.c_str(), err2str, ret);
 
 		}
 		else {
